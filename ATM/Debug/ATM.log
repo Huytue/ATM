@@ -1,0 +1,9 @@
+﻿  ATM.cpp
+c:\users\maximus\desktop\doan\atm\atm.cpp(82): warning C4326: return type of 'main' should be 'int' instead of 'void'
+c:\users\maximus\desktop\doan\atm\atm.cpp(850): warning C4129: '<': unrecognized character escape sequence
+c:\users\maximus\desktop\doan\atm\atm.cpp(850): warning C4129: ' ': unrecognized character escape sequence
+c:\users\maximus\desktop\doan\atm\atm.cpp(854): warning C4129: '<': unrecognized character escape sequence
+c:\users\maximus\desktop\doan\atm\atm.cpp(854): warning C4129: ' ': unrecognized character escape sequence
+c:\users\maximus\desktop\doan\atm\atm.cpp(859): warning C4129: '<': unrecognized character escape sequence
+c:\users\maximus\desktop\doan\atm\atm.cpp(859): warning C4129: ' ': unrecognized character escape sequence
+  ATM.vcxproj -> C:\Users\Maximus\Desktop\DoAn\ATM\Debug\ATM.exe
