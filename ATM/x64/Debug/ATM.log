@@ -1,0 +1,10 @@
+﻿  ATM.cpp
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(83): warning C4326: return type of 'main' should be 'int' instead of 'void'
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(474): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(831): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(831): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(835): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(835): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(840): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(840): warning C4129: ' ': unrecognized character escape sequence
+  ATM.vcxproj -> C:\Users\Admin\Documents\GitHub\ATM\ATM\x64\Debug\ATM.exe

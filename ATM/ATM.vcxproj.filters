@@ -26,5 +26,8 @@
     <None Include="input.dat">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="00000000000002.dat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

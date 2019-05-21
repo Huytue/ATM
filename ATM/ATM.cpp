@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <ctime>
 #include <windows.h>
+#include <iomanip>
 using namespace std;
 
 //Khai bao CTDL:
@@ -17,7 +18,7 @@ struct KhachHang
 	string sPass;
 	string sSTK;	
 	string sHoTen;
-	double fSoDu;
+	int fSoDu;
 	string sLoaiTien;
 	string sChiNhanh;
 };
@@ -161,7 +162,7 @@ void dangNhap(List L)
 					{
 					case 1:
 						system("cls");
-						//Thông tin tài khoản
+						//Thong tin tai khoan
 						thongTinTK(L, q);
 						textcolor(9);
 						cout << "\n\n\t\tNhap \""; textcolor(10); cout << "YES"; textcolor(9); cout << "\" de quay lai Menu. Nhap \""; textcolor(4); cout << "NO"; textcolor(9); cout << "\" de thoat: "; textcolor(7);
@@ -180,7 +181,7 @@ void dangNhap(List L)
 						}
 					case 2:
 						system("cls");
-						//Rút tiền
+						//Rut tien
 						rutTien(L, q);
 						textcolor(9);
 						cout << "\n\n\t\tNhap \"";textcolor(10); cout << "YES"; textcolor(9); cout << "\" de quay lai Menu. Nhap \""; textcolor(4); cout << "NO"; textcolor(9); cout << "\" de thoat: "; textcolor(7);
@@ -199,7 +200,7 @@ void dangNhap(List L)
 						}
 					case 3:
 						system("cls");
-						//Chuyển Tiền
+						//Chuyen tien
 						chuyentien(L,q);
 						textcolor(9);
 						cout << "\n\n\t\tNhap \"";textcolor(10); cout << "YES"; textcolor(9); cout << "\" de quay lai Menu. Nhap \""; textcolor(4); cout << "NO"; textcolor(9); cout << "\" de thoat: "; textcolor(7);
@@ -242,24 +243,6 @@ void dangNhap(List L)
 						doiMatKhau(L, q);
 						break;
 					case 6:
-						system("cls");
-						recharge(L, q);
-						textcolor(9);
-						cout << "\n\n\t\tNhap \"";textcolor(10); cout << "YES"; textcolor(9); cout << "\" de quay lai Menu. Nhap \""; textcolor(4); cout << "NO"; textcolor(9); cout << "\" de thoat: "; textcolor(7);
-						rewind(stdin); getline(cin, sLuaChon);
-						if(sLuaChon == "yes" || sLuaChon == "YES")
-						{
-							system("cls");
-							goto cc;
-						}
-						else 
-						{
-							textcolor(10);
-							cout << "\n\t\t\tCam on quy khach da su dung dich vu, hen gap lai. \n";
-							textcolor(7);
-							break;
-						}
-					case 7:
 						//Thoat khoi giao dich
 						textcolor(10);
 						cout << "\n\t\t\tCam on quy khach da su dung dich vu, hen gap lai. \n";
@@ -311,8 +294,8 @@ void rutTien(List L, Node * q)
 	system("cls");
 	do {
 		thongBao("RUTTIEN");
-		thongBao("MENURUTTIEN"); textcolor(10);
-		cout << "\n\t\t\t\t\tSo tien muon rut: "; textcolor(10);
+		thongBao("MENURUTTIEN"); textcolor(3);
+		cout << "\n\t\t\t\tSo tien muon rut: "; textcolor(10);
 		cin >> nN;
 	} while (nN < 1 || nN > 6);
 	switch (nN)
@@ -361,22 +344,22 @@ void rutTien(List L, Node * q)
 			system("cls");
 			thongBao("RUTTIEN");
 			textcolor(10);
-			cout << "\t\t\t\t   Thong Tin Rut Tien\n";
+			cout << "\t\t\t   Thong Tin Rut Tien\n";
 			textcolor(3);
-			cout << "\t\t\tSTK: " << q->nData.sSTK << endl;
-			cout << "\t\t\tKhach Hang: " << q->nData.sHoTen << endl;
-			cout << "\t\t\tSo Giao Dich: " << nNhapTienRut << " " << q->nData.sLoaiTien << endl;
-			cout << "\t\t\tPhi Giao Dich: " << nPhiGiaoDich(nNhapTienRut, "RUTTIEN") - nPhiGiaoDich(nNhapTienRut, "RUTTIEN") / 11 << " " << q->nData.sLoaiTien << "   -   THUE	: " << nPhiGiaoDich(nNhapTienRut, "RUTTIEN") / 11 << " " << q->nData.sLoaiTien << endl;
-			cout << "\t\t\tSo Du Hien Tai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;
-			cout << "\t\t\tSo Du Con Lai: " << q->nData.fSoDu - (float)nNhapTienRut - (float)nPhiGiaoDich(nNhapTienRut, "RUTTIEN") << " " << q->nData.sLoaiTien << endl;
+			cout << "\t\tSTK: " << q->nData.sSTK << endl;
+			cout << "\t\tKhach Hang: " << q->nData.sHoTen << endl;
+			cout << "\t\tSo Giao Dich: " << nNhapTienRut << " " << q->nData.sLoaiTien << endl;
+			cout << "\t\tPhi Giao Dich: " << nPhiGiaoDich(nNhapTienRut, "RUTTIEN") - nPhiGiaoDich(nNhapTienRut, "RUTTIEN") / 11 << " " << q->nData.sLoaiTien << "   -   THUE: " << nPhiGiaoDich(nNhapTienRut, "RUTTIEN") / 11 << " " << q->nData.sLoaiTien << endl;
+			cout << "\t\tSo Du Hien Tai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;
+			cout << "\t\tSo Du Con Lai: " << q->nData.fSoDu - (float)nNhapTienRut - (float)nPhiGiaoDich(nNhapTienRut, "RUTTIEN") << " " << q->nData.sLoaiTien << endl;
 
 				q->nData.fSoDu = q->nData.fSoDu - nNhapTienRut - nPhiGiaoDich(nNhapTienRut, "RUTTIEN");
 				textcolor(10);
-				cout << "\n\t\t\tBan da rut thanh cong: " << nNhapTienRut << " " << q->nData.sLoaiTien << endl;
-				cout << "\t\t\tSo du con lai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;
+				cout << "\n\t\tBan da rut thanh cong: " << nNhapTienRut << " " << q->nData.sLoaiTien << endl;
+				cout << "\t\tSo du con lai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;
 				textcolor(7);
 				Node * g = L.pHead;
-				//In hoa don rut tien?
+				//In hoa don rut tien
 				string ktra = "";
 				textcolor(9);
 				cout << "\n\t\tNhap \""; textcolor(10); cout << "YES"; textcolor(9); cout << "\" de in hoa don. Nhap \""; textcolor(4); cout << "NO"; textcolor(9); cout << "\" de thoat: "; textcolor(7);
@@ -417,7 +400,7 @@ void chuyentien(List L, Node * q)
 	string sNhapSTKChuyen = " ";
 	system("cls");
 	thongBao("CHUYENTIEN");
-	cout << "\t\t\tLuu y: Nhap ";
+	cout << "\t\tLuu y: Nhap ";
 	textcolor(4);
 	cout << "ESC";
 	textcolor(7);
@@ -425,7 +408,7 @@ void chuyentien(List L, Node * q)
 	while (flag == 0)
 	{
 		textcolor(10);
-		cout << "\t\t\tNhap so tai khoan can chuyen tien: ";textcolor(7);
+		cout << "\t\tNhap so tai khoan can chuyen tien: ";textcolor(7);
 		rewind(stdin);
 		label:getline(cin, sNhapSTKChuyen);
 		if (sNhapSTKChuyen == "")
@@ -458,9 +441,9 @@ void chuyentien(List L, Node * q)
 						system("cls");
 						thongBao("CHUYENTIEN");
 						textcolor(4);
-						cout << "\tSo tien nhap vao phai la boi cua 50.000vnd. Gioi han giao dich tu 200.000vnd den 50.000.000vnd\n";
+						cout << "\t\tSo tien nhap vao phai la boi cua 50.000vnd.\n\t\tGioi han giao dich tu 200.000vnd den 50.000.000vnd\n";
 						textcolor(10);
-						cout << "\t\t\tNhap so tien can chuyen: ";
+						cout << "\n\t\t\tNhap so tien can chuyen: ";
 						textcolor(7);
 						cin >> nNhapTienChuyen;
 						system("cls");
@@ -478,21 +461,21 @@ void chuyentien(List L, Node * q)
 						{
 							system("cls");
 							thongBao("CHUYENTIEN");
-							textcolor(10);
-							cout << "\t\t\t\tXac Nhan Chuyen Tien\n";
-							textcolor(3);
-							cout << "\t\t\tChuyen Tien Den STK: " << t->nData.sSTK << endl;
-							cout << "\t\t\tTen Nguoi Nhan: " << t->nData.sHoTen << endl;
-							cout << "\t\t\tSo Tien Chuyen: " << nNhapTienChuyen << " " << t->nData.sLoaiTien << endl;
-							cout << "\t\t\tPhi Giao Dich: " << nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN") - nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN")/11 << " " << q->nData.sLoaiTien << "   -   VAT: " << nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN")/11 << " " << q->nData.sLoaiTien << endl;
-							cout << "\t\t\tSo Du Hien Tai: " << q->nData.fSoDu << " " << t->nData.sLoaiTien << endl;
-							cout << "\t\t\tSo Du Con Lai: " << q->nData.fSoDu - (float)nNhapTienChuyen - nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN") << " " << t->nData.sLoaiTien << endl;
+							textcolor(14);
+							cout << "\t\t\t  Xac Nhan Chuyen Tien\n";
+							textcolor(12);
+							cout << "\t\tChuyen Tien Den STK: " << t->nData.sSTK << endl;
+							cout << "\t\tTen Nguoi Nhan: " << t->nData.sHoTen << endl;
+							cout << "\t\tSo Tien Chuyen: " << nNhapTienChuyen << " " << t->nData.sLoaiTien << endl;
+							cout << "\t\tPhi Giao Dich: " << nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN") - nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN")/11 << " " << q->nData.sLoaiTien << "   -   THUE: " << nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN")/11 << " " << q->nData.sLoaiTien << endl;
+							cout << "\t\tSo Du Hien Tai: " << q->nData.fSoDu << " " << t->nData.sLoaiTien << endl;
+							cout << "\t\tSo Du Con Lai: " << q->nData.fSoDu - (float)nNhapTienChuyen - nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN") << " " << t->nData.sLoaiTien << endl;
 							
 								q->nData.fSoDu = q->nData.fSoDu - (float)nNhapTienChuyen - nPhiGiaoDich(nNhapTienChuyen, "CHUYENTIEN");
 								t->nData.fSoDu = t->nData.fSoDu + nNhapTienChuyen;
 								textcolor(10);
-								cout << "\t\t\tChuyen Tien Thanh Cong !!!\n";
-								cout << "\t\t\tSo Du Con Lai: "; 
+								cout << "\t\tChuyen Tien Thanh Cong !!!\n";
+								cout << "\t\tSo Du Con Lai: "; 
 								cout << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;textcolor(7);
 								ghiKH(L);
 								ghiLSGD(L, q, "CHUYENTIEN", nNhapTienChuyen, t,0);
@@ -676,9 +659,9 @@ void ghiKH(List &L)
 }
 
 //Doc tu file input 1 khach hang
-void nhapKH(ifstream &fin, KhachHang &kH) //Đọc từ file input 1 khách hàng
+void nhapKH(ifstream &fin, KhachHang &kH) 
 {
-	/*username, password, STK, Ho Ten, So Du, loai tien, chi nhanh  */	
+		
 	getline(fin, kH.sUser, ',');
 	getline(fin, kH.sPass, ',');
 	getline(fin, kH.sSTK, ',');
@@ -727,15 +710,15 @@ void xuatDSKH(List L)
 void addTail(List &L, KhachHang kH) 
 {
 	Node *pNew = createNode(kH);
-	if (L.pHead == NULL) //Danh sách rỗng
+	if (L.pHead == NULL) //Danh sach rong
 	{
 		L.pHead = L.pTail = pNew;
 		return;
 	}
 	else
 	{
-		L.pTail->pNext = pNew; //Cho con trỏ của pTail trỏ đến Node p
-		L.pTail = pNew; //Cập nhật lại pTail chính là Node p
+		L.pTail->pNext = pNew; 
+		L.pTail = pNew; 
 	}
 }
 void output(List L)
@@ -777,48 +760,46 @@ void thongBao(string sVien)
 	{
 		if (sVien == "MENU")
 		{
-			textcolor(6);
+			cout << endl;
+			textcolor(9);
 			cout << "*******************************************************************************" << endl;
-			cout << "\t  ";
-			textcolor(10);
-			cout << "\t\tCHON PHUONG AN DE THUC HIEN"; textcolor(6);  
+			cout << endl;
+			textcolor(14);
+			cout << "\t\t\t  CHON PHUONG AN DE THUC HIEN"; textcolor(6);  
+			cout << endl;
 			cout <<"\t\t\t\t" << endl;
 			cout << endl;
 			textcolor(6);
 			cout << "\t  ";
-			textcolor(10);
+			textcolor(12);
 			cout << "   1. Thong Tin Tai Khoan\t\t2. Rut Tien"; textcolor(6);
 			cout  << endl;
 			cout << endl;
 			textcolor(6);
 			cout << "\t  ";
-			textcolor(10);
+			textcolor(12);
 			cout << "   3. Chuyen Tien \t\t\t4. Lich su giao dich"; textcolor(6);
 			cout  << endl;
 			cout << endl;
 			textcolor(6);
 			cout << "\t  ";
-			textcolor(10);
-			cout << "   5. Doi Mat Khau \t\t\t6. Nap Tien            \t"; textcolor(6);
+			textcolor(12);
+			cout << "   5. Doi Mat Khau \t\t\t6. Thoat giao dich            \t"; textcolor(9);
 			cout << endl;
-			cout << endl;
-			cout << "\t  ";
-			textcolor(10);
-			cout << "   7. Thoat giao dich\t\t\t\t"; textcolor(6);
 			cout << endl;
 			cout << endl;
 			cout << "*******************************************************************************" << endl;
-			textcolor(7);	
+			textcolor(7);		
 		}
 		else if (sVien == "RUTTIEN")
 		{
 			textcolor(11);
-			cout << "\t\t\t\t*************************" << endl;
-			cout << "\t\t\t\t*  ";
+			cout << "\t\t\t  *************************" << endl;
+			cout << "\t\t\t  *  ";
 			textcolor(4);
-			cout << "\tRUT TIEN\t"; textcolor(11);  
-			cout <<"*" << endl;
-			cout << "\t\t\t\t*************************" << endl;
+			cout << "\t  RUT TIEN\t"; textcolor(11);  
+			cout << "  *" << endl;
+			cout << "\t\t\t  *************************" << endl;
 			textcolor(7);
 		}
 		else if (sVien == "DOIMK")
@@ -834,43 +815,33 @@ void thongBao(string sVien)
 		}
 		else if (sVien == "CHUYENTIEN") {
 			textcolor(6);
-			cout << "\t\t\t\t*************************" << endl;
-			cout << "\t\t\t\t*  ";
+			cout << "\t\t\t**************************" << endl;
+			cout << "\t\t\t*  ";
 			textcolor(10);
 			cout << "\tCHUYEN TIEN\t"; textcolor(6);  
-			cout <<"*" << endl;
-			cout << "\t\t\t\t*************************" << endl;
+			cout <<" *" << endl;
+			cout << "\t\t\t**************************" << endl;
 			textcolor(7);
 		}
 		else if (sVien == "MENURUTTIEN")
 		{ 
 			textcolor(10);
-			cout << "\t\t\t\tVUI LONG CHON SO TIEN CAN RUT\n";
+			cout << "\t\t\tVUI LONG CHON SO TIEN CAN RUT\n";
 			textcolor(9);
-			cout << "\t"; textcolor(13); cout << "1"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   50.000 VND             \t\t        100.000 VND     "; textcolor(9); cout << "=>"; textcolor(13); cout << "   2" << endl; textcolor(10);
+			cout << "   "; textcolor(13); cout << "1"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   50.000 VND           \t\t       100.000 VND     "; textcolor(9); cout << "=>"; textcolor(13); cout << "   2" << endl; textcolor(10);
 
 			cout << endl; textcolor(9);
 
-			cout << "\t"; textcolor(13); cout << "3"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   200.000 VND            \t\t        500.000 VND     "; textcolor(9); cout << "=>"; textcolor(13); cout << "   4" << endl; textcolor(10);
+			cout << "   "; textcolor(13); cout << "3"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   200.000 VND          \t\t       500.000 VND     "; textcolor(9); cout << "=>"; textcolor(13); cout << "   4" << endl; textcolor(10);
 
 
 			cout << endl; textcolor(9);
 
-			cout << "\t"; textcolor(13); cout << "5"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   1.000.000 VND           \t\t        Nhap So Khac    "; textcolor(9); cout << "=>"; textcolor(13); cout << "   6" << endl; textcolor(10);
+			cout << "   "; textcolor(13); cout << "5"; textcolor(9); cout << "   \<="; textcolor(4); cout << "\   1.000.000 VND         \t\t       Nhap So Khac    "; textcolor(9); cout << "=>"; textcolor(13); cout << "   6" << endl; textcolor(10);
 
-			cout << "\t|/----------------------------/ \t\t \\---------------------------\\|" << endl; textcolor(7);
+			cout << " |/----------------------------/ \t\t \\---------------------------\\|" << endl; textcolor(7);
 		}
-		else if (sVien == "NAPTIEN")
-		{
-			textcolor(6);
-			cout << "\t\t\t\t*************************" << endl;
-			cout << "\t\t\t\t*  ";
-			textcolor(10);
-			cout << "\tNAP TIEN\t"; textcolor(6);  
-			cout <<"*" << endl;
-			cout << "\t\t\t\t*************************" << endl;
-			textcolor(7);
-		}
+		
 	}
 }
 
@@ -901,20 +872,26 @@ string maHoaMK(unsigned int maxLength)
 void thongTinTK(List L, Node *q) 
 {
 	textcolor(6);
-	cout << "\t\t\t\t*************************" << endl;
-	cout << "\t\t\t\t*  ";
+	cout << "   \t\t\t*******************************" << endl;
+	cout << "   \t\t\t*  ";
 	textcolor(10);
-	cout << "THONG TIN KHACH HANG "; textcolor(6);  
-	cout <<"*" << endl;
-	cout << "\t\t\t\t*************************" << endl;
-	textcolor(7);
+	cout << "   THONG TIN KHACH HANG "; textcolor(6);  
+	cout <<"   *" << endl;
+	cout << "   \t\t\t*******************************\n\n" << endl;
+
 	textcolor(3);
+	cout << "\t\t<----------------------------------------------->" << endl;
+	cout << "\t\t\t  ";
+	textcolor(12);
 	cout << "\n";
 	cout << "\t\t\tHo va Ten: " << q->nData.sHoTen << endl;
 	cout << "\t\t\tSo Tai Khoan: " << q->nData.sSTK << endl;
 	cout << "\t\t\tSo Du Hien Tai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;
 	cout << "\t\t\tChi Nhanh: " << q->nData.sChiNhanh << endl;
-	textcolor(7);
+	textcolor(3);
+	cout << "" << endl;
+	cout << "\t\t<----------------------------------------------->" << endl;
+	
 }
 
 //Ghi lai lich su giao dich:
@@ -952,7 +929,7 @@ void ghiLSGD(List L, Node* q, string sChucNang, int nTienTru, Node* g, int nPhiG
 void docLichSuGiaoDich(Node * q)
 {
 	string a = "";
-	ifstream File; //Mở File Input đưa dữ liệu vào
+	ifstream File; 
 	File.open( q->nData.sSTK + ".dat");
 	cout << "		          =================>>>LICH SU GIAO DICH<<<=================\n\n";
 
@@ -974,8 +951,8 @@ void inHoaDon(List L, Node * q, int nTienRut, int PhiGD, Node * g, string sForm)
 	tm *t = localtime(&now);
 	if (sForm == "RUTTIEN")
 	{
-		textcolor(9);
-		cout << "\t\t/-----------------------------------------------------\\\n";
+		textcolor(7);
+		cout << "\n\n\t\t/----------------------------------------------------\\\n";
 		cout << "\t\t| BIDV - Ngan Hang TMCP Dau Tu Va Phat Trien Viet Nam |\n";
 		cout << "\t\t|-----------------------------------------------------|\n";
 		cout << "\t\t|\t\t\t\t\t\t      |\n";
@@ -994,13 +971,13 @@ void inHoaDon(List L, Node * q, int nTienRut, int PhiGD, Node * g, string sForm)
 		cout << "\t\t|VAT in hoa don: 50 VND \t\t\t      |\n";
 		cout << "\t\t|-----------------------------------------------------|\n";
 		cout << "\t\t| \tDien thoai ho tro 24/24: 09888.2.33.77 \t      |\n";
-		cout << "\t\t\\-----------------------------------------------------/\n";
+		cout << "\t\t\\----------------------------------------------------/\n";
 		textcolor(7);
 	}
 	else if (sForm == "CHUYENTIEN")
 	{
-		textcolor(9);
-		cout << "\t\t/-----------------------------------------------------\\\n";
+		textcolor(7);
+		cout << "\n\n\t\t/-----------------------------------------------------\\\n";
 		cout << "\t\t BIDV - Ngan Hang TMCP Dau Tu Va Phat Trien Viet Nam \n";
 		cout << "\t\t-----------------------------------------------------\n";
 		cout << "\t\t\t\t\t\t\t\t  \n";
@@ -1050,15 +1027,15 @@ int nPhiGiaoDich(int nTienNhap, string sForm)
 	{
 		if (nTienNhap <= 500000)
 		{
-			return 1000;
+			return 3300;
 		}
 		else if (nTienNhap <= 1000000)
 		{
-			return 3000;
+			return 5300;
 		}
 		else if (nTienNhap <= 10000000)
 		{
-			return 10000;
+			return 11000;
 		}
 		return 22000;
 	}
@@ -1070,13 +1047,13 @@ int nPhiGiaoDich(int nTienNhap, string sForm)
 		}
 		else if (nTienNhap <= 5000000)
 		{
-			return 20000;
+			return 15000;
 		}
 		else if (nTienNhap <= 10000000)
 		{
-			return 30000;
+			return 25000;
 		}
-		return 40000;
+		return 30000;
 	}
 	return 0;
 }
@@ -1094,7 +1071,7 @@ string kiemTraTime(string sX, Node * q)
 			return "0";
 		}
 	}
-	if (sX == "m")
+	if (sX == "mm")
 	{
 		if((t->tm_min) < 10)
 		{
@@ -1132,32 +1109,6 @@ string kiemTraTime(string sX, Node * q)
 	return "";
 }
 
-//Nap tien vao tai khoan:
-void recharge(List L, Node * q)
-{	
-dd:
-	system("cls");
-	thongBao("NAPTIEN");
-	int nNhapTienNap = 0;
-	textcolor(4);
-	cout << "\tLuu y so tien nap phai lon hon 100.000 VND va la boi cua 50.000 VND\n";
-	textcolor(10);
-	cout << "\t\tNhap so tien nap: ";
-	textcolor(7);
-	cin >> nNhapTienNap;
-	if (nNhapTienNap < 100000 || nNhapTienNap % 50000 != 0)
-	{
-		goto dd;
-	}
-	q->nData.fSoDu += nNhapTienNap;
-	textcolor(10);
-	cout << "\t\t\tBan da nap thanh cong " << nNhapTienNap << " " << q->nData.sLoaiTien << " vao tai khoan.\n";
-	cout << "\t\t\tSo du hien tai: " << q->nData.fSoDu << " " << q->nData.sLoaiTien << "\n";
-	textcolor(7);
-	ghiKH(L);
-	Node * g = new Node;
-	ghiLSGD(L, q, "NAPTIEN", nNhapTienNap, g, 0);
-}
 void textcolor(int color)
 {
 	HANDLE hC;
