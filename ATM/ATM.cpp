@@ -52,7 +52,6 @@ void nhapDSKH(ifstream &fin, List &L);
 void textcolor(int color);
 void ghiKH(List &L);
 void addTail(List &L, KhachHang kH);
-void output(List L);
 void xuatDSKH(List L);
 void xuatKH(KhachHang kh);
 int maGiaodich();
@@ -478,7 +477,7 @@ void chuyentien(List L, Node * q)
 								cout << "\t\tSo Du Con Lai: "; 
 								cout << q->nData.fSoDu << " " << q->nData.sLoaiTien << endl;textcolor(7);
 								ghiKH(L);
-								ghiLSGD(L, q, "CHUYENTIEN", nNhapTienChuyen, t,0);
+								//ghiLSGD(L, q, "CHUYENTIEN", nNhapTienChuyen, t,0);
 								
 								//In hoa don:
 								string ktra = "";
@@ -676,7 +675,7 @@ void nhapKH(ifstream &fin, KhachHang &kH)
 //Doc tu file input toan bo khach hang
 void nhapDSKH(ifstream &fin, List &L) 
 {
-	while(!fin.eof() == true) 
+	while(!fin.eof() == true)  //End Of File : chỉ sự kết thúc việc đọc của 1 file
 	{
 		KhachHang kH;
 		nhapKH(fin, kH); 
@@ -721,25 +720,6 @@ void addTail(List &L, KhachHang kH)
 		L.pTail = pNew; 
 	}
 }
-void output(List L)
-{
-	if(L.pHead == NULL)
-	{
-		cout << "\n\t\t\tDanh Sach Rong !!!\n";
-		return;
-	}
-	else
-	{
-		cout << "\n\t\t\tXuat Du Lieu List\n";
-		Node *p = L.pHead;
-		while(p != NULL)
-		{
-			
-			p = p->pNext;
-		}
-	}
-}
-
 //Thong bao
 void thongBao(string sVien)
 {
@@ -899,48 +879,43 @@ void ghiLSGD(List L, Node* q, string sChucNang, int nTienTru, Node* g, int nPhiG
 {
 	time_t baygio = time(0);
 	tm *t = localtime(&baygio);
-	ofstream File;
-	File.open( q->nData.sSTK + ".dat", ios::app);
+	ofstream fout;
+	fout.open( q->nData.sSTK + ".dat", ios::app);
 	if(sChucNang == "CHUYENTIEN")
 	{	
-		File << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << "   " << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << " " << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << "  " << q->nData.fSoDu << q->nData.sLoaiTien << "   " << nPhiGD << "     " << "send" << "    " << g->nData.sSTK << "  " << g->nData.sHoTen << "   " << maGiaodich();
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(7) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Chuyen" << setw(17) << g->nData.sSTK << setw(18) << g->nData.sHoTen << setw(10) << maGiaodich();
 	}
 	else if (sChucNang == "RUTTIEN")
 	{
-		File << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << "   " << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << " " << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << "  " << q->nData.fSoDu << q->nData.sLoaiTien << "   " << nPhiGD <<"      " << "with" << "    " << "Not Applicable" << "  " << "N/A" << "              " << maGiaodich();
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(7) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Rut" << setw(12) << "N/A" << setw(15) << "N/A" << setw(15) << maGiaodich();
 	}
 	else if (sChucNang == "NHANTIEN")
 	{
-		File << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << "   " << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << " " << nTienTru << g->nData.sLoaiTien << kiemTraTime("100", q) << "  " << q->nData.fSoDu << q->nData.sLoaiTien << "   " << "0" << "         " << "plus" << "    " << g->nData.sSTK << "  " << g->nData.sHoTen << "   " << maGiaodich();
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(7) << nTienTru << g->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << "0" << setw(10) << "Nhan" << setw(17) << g->nData.sSTK << setw(18) << g->nData.sHoTen << setw(10) << maGiaodich();
 	}
 	else if (sChucNang == "LOCKED")
 	{
-		File << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << "   " << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << " " << "0" << q->nData.sLoaiTien << "       " << q->nData.fSoDu << q->nData.sLoaiTien << "   " << 0 << "         " << "lock" << "    " << "Not Applicable" << "  " << "N/A" << "              " << maGiaodich();
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(7) << "0" << q->nData.sLoaiTien << setw(11) << q->nData.fSoDu << q->nData.sLoaiTien << setw(6) << "0" << setw(11) << "lock" << setw(11) << "N/A" << setw(15) << "N/A" << setw(18) << maGiaodich();
 	}
-	else if (sChucNang == "NAPTIEN")
-	{
-		File << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << "   " << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << " " << nTienTru << q->nData.sLoaiTien << "  " << q->nData.fSoDu << q->nData.sLoaiTien << "   " << 0 <<   "         " << "add" << "     " << "Not Applicable" << "  " << "N/A" << "              " << maGiaodich();
-	}
-	File.close();
-	
+	fout.close();
 }
 
 //Xuat lich su giao dich ra man hinh:
 void docLichSuGiaoDich(Node * q)
 {
 	string a = "";
-	ifstream File; 
-	File.open( q->nData.sSTK + ".dat");
+	ifstream fin; 
+	fin.open( q->nData.sSTK + ".dat");
 	cout << "		          =================>>>LICH SU GIAO DICH<<<=================\n\n";
 
 cout << "hh/mm/ss    Dd/mm/yy    Convert    Wallet    Tran-Fee    Type    Account number    F-L name    Trading code\n";
-	while(!File.eof())
+	while(!fin.eof())
 	{
-		getline(File, a, '\n');
+		getline(fin, a, '\n');
 		cout << a << endl;
 		Sleep(30);
 	}
-	File.close();
+	fin.close();
 	cout << "\t\t___________________________________________________________________________\n";
 }
 
@@ -1130,3 +1105,4 @@ int nDemSoLuongKhachHang()
 	fin.close();
 	return nDem;
 }
+	
