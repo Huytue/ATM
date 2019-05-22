@@ -118,7 +118,6 @@
     <ClCompile Include="ATM.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="00000000000002.dat" />
     <None Include="IDgiaodich.dat" />
     <None Include="input.dat" />
   </ItemGroup>
