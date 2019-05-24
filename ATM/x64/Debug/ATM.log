@@ -1,9 +1,9 @@
 ﻿  ATM.cpp
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(76): warning C4326: return type of 'main' should be 'int' instead of 'void'
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(780): warning C4129: '<': unrecognized character escape sequence
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(780): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(784): warning C4129: '<': unrecognized character escape sequence
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(784): warning C4129: ' ': unrecognized character escape sequence
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(789): warning C4129: '<': unrecognized character escape sequence
-C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(789): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(68): warning C4326: return type of 'main' should be 'int' instead of 'void'
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(803): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(803): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(807): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(807): warning C4129: ' ': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(812): warning C4129: '<': unrecognized character escape sequence
+C:\Users\Admin\Documents\GitHub\ATM\ATM\ATM.cpp(812): warning C4129: ' ': unrecognized character escape sequence
   ATM.vcxproj -> C:\Users\Admin\Documents\GitHub\ATM\ATM\x64\Debug\ATM.exe

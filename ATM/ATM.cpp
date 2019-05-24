@@ -27,15 +27,6 @@ struct Node
 	KhachHang nData; 
 	Node * pNext;	
 };
-Node * createNode(KhachHang kH)
-{
-	Node *p = new Node;
-	if (p == NULL)
-		exit(1);
-	p->nData = kH; 
-	p->pNext = NULL; 
-	return p;
-}
 struct List
 {
 	Node *pHead, *pTail;
@@ -47,14 +38,15 @@ struct List
 
 /*------------Thong tin ATM---------------*/
 string sMaATM = "998091"; //Ma tru ATM
+Node* createNode(KhachHang kH);
+void addTail(List& L, KhachHang kH);
+void textcolor(int color);
+int nDemSoLuongKhachHang();
 void nhapKH(ifstream &fin, KhachHang &kH);
 void nhapDSKH(ifstream &fin, List &L);
-void textcolor(int color);
 void ghiKH(List &L);
-void addTail(List& L, KhachHang kH);
 int maGiaodich();
 void thongBao(string sVien);
-int nDemSoLuongKhachHang();
 void inHoaDon(List L, Node* q, int nTienRut, int PhiGD, Node* g, string sForm);
 int nPhiGiaoDich(int nTienNhap, string sForm);
 string kiemTraTime(string s, Node* q);
@@ -81,7 +73,7 @@ void main()
 	system("pause");
 }
 
-//1.Chuc nang dang nhap 
+//Dang nhap 
 void dangNhap(List L)
 {
 	int nChon = 0;
@@ -274,7 +266,7 @@ void dangNhap(List L)
 	}
 }
 
-//2.Rut tien:
+//Rut tien:
 void rutTien(List L, Node * q)
 {
 	int nNhapTienRut = 0;
@@ -380,7 +372,7 @@ void rutTien(List L, Node * q)
 	}
 }
 
-//3.Chuc nang chuyen tien:
+//Chuyen tien:
 void chuyentien(List L, Node * q)
 {
 	int flag = 0;
@@ -528,6 +520,51 @@ void chuyentien(List L, Node * q)
 		}
 	}
 }
+//Ghi lai lich su giao dich:
+void ghiLSGD(List L, Node* q, string sChucNang, int nTienTru, Node* g, int nPhiGD)
+{
+	time_t baygio = time(0);
+	tm* t = localtime(&baygio);
+	ofstream fout;
+	fout.open(q->nData.sSTK + ".dat", ios::app);
+	if (sChucNang == "CHUYENTIEN")
+	{
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1 + t->tm_mon << "/" << 1900 + t->tm_year << setw(10) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Chuyen" << setw(17) << g->nData.sSTK << setw(17) << g->nData.sHoTen << setw(11) << maGiaodich();
+	}
+	else if (sChucNang == "RUTTIEN")
+	{
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1 + t->tm_mon << "/" << 1900 + t->tm_year << setw(10) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Rut" << setw(12) << "N/A" << setw(16) << "N/A" << setw(17) << maGiaodich();
+	}
+	else if (sChucNang == "NHANTIEN")
+	{
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1 + t->tm_mon << "/" << 1900 + t->tm_year << setw(10) << nTienTru << g->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << "0" << setw(10) << "Nhan" << setw(17) << g->nData.sSTK << setw(17) << g->nData.sHoTen << setw(11) << maGiaodich();
+	}
+	else if (sChucNang == "LOCKED")
+	{
+		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1 + t->tm_mon << "/" << 1900 + t->tm_year << setw(10) << "0" << q->nData.sLoaiTien << setw(11) << q->nData.fSoDu << q->nData.sLoaiTien << setw(6) << "0" << setw(11) << "lock" << setw(11) << "N/A" << setw(15) << "N/A" << setw(18) << maGiaodich();
+	}
+	fout.close();
+}
+
+//Xuat lich su giao dich ra man hinh:
+void docLichSuGiaoDich(Node* q)
+{
+	string a = "";
+	ifstream fin;
+	fin.open(q->nData.sSTK + ".dat");
+	cout << "		          =================>>>LICH SU GIAO DICH<<<=================\n\n";
+
+	cout << "hh/mm/ss    Dd/mm/yy      Convert     Wallet    Tran-Fee    Type   Account number     F-L name      Trading code\n";
+	while (!fin.eof())
+	{
+		getline(fin, a, '\n');
+		cout << a << endl;
+		Sleep(30);
+	}
+	fin.close();
+	cout << "\t\t___________________________________________________________________________\n";
+}
+
 
 //Đoi mat khau:
 void doiMatKhau(List L, Node *t)
@@ -674,21 +711,7 @@ void nhapDSKH(ifstream &fin, List &L)
 	}
 	fin.close();
 }
-//Them vao cuoi DS:
-void addTail(List &L, KhachHang kH) 
-{
-	Node *pNew = createNode(kH);
-	if (L.pHead == NULL) //Danh sach rong
-	{
-		L.pHead = L.pTail = pNew;
-		return;
-	}
-	else
-	{
-		L.pTail->pNext = pNew; 
-		L.pTail = pNew; 
-	}
-}
+
 //Thong bao
 void thongBao(string sVien)
 {
@@ -841,51 +864,6 @@ void thongTinTK(List L, Node *q)
 	cout << "" << endl;
 	cout << "\t\t<----------------------------------------------->" << endl;
 	
-}
-
-//Ghi lai lich su giao dich:
-void ghiLSGD(List L, Node* q, string sChucNang, int nTienTru, Node* g, int nPhiGD)
-{
-	time_t baygio = time(0);
-	tm *t = localtime(&baygio);
-	ofstream fout;
-	fout.open( q->nData.sSTK + ".dat", ios::app);
-	if(sChucNang == "CHUYENTIEN")
-	{	
-		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(10) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Chuyen" << setw(17) << g->nData.sSTK << setw(17) << g->nData.sHoTen << setw(11) << maGiaodich();
-	}
-	else if (sChucNang == "RUTTIEN")
-	{
-		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(10) << nTienTru << q->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << nPhiGD << setw(10) << "Rut" << setw(12) << "N/A" << setw(16) << "N/A" << setw(17) << maGiaodich();
-	}
-	else if (sChucNang == "NHANTIEN")
-	{
-		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(10) << nTienTru << g->nData.sLoaiTien << kiemTraTime("100", q) << setw(10) << q->nData.fSoDu << q->nData.sLoaiTien << setw(7) << "0" << setw(10) << "Nhan" << setw(17) << g->nData.sSTK << setw(17) << g->nData.sHoTen << setw(11) << maGiaodich();
-	}
-	else if (sChucNang == "LOCKED")
-	{
-		fout << "\n" << kiemTraTime("hh", q) << t->tm_hour << ":" << kiemTraTime("m", q) << t->tm_min << ":" << kiemTraTime("ss", q) << t->tm_sec << setw(3) << kiemTraTime("dd", q) << t->tm_mday << "/" << kiemTraTime("mm", q) << 1+t->tm_mon << "/" << 1900+t->tm_year  << setw(10) << "0" << q->nData.sLoaiTien << setw(11) << q->nData.fSoDu << q->nData.sLoaiTien << setw(6) << "0" << setw(11) << "lock" << setw(11) << "N/A" << setw(15) << "N/A" << setw(18) << maGiaodich();
-	}
-	fout.close();
-}
-
-//Xuat lich su giao dich ra man hinh:
-void docLichSuGiaoDich(Node * q)
-{
-	string a = "";
-	ifstream fin; 
-	fin.open( q->nData.sSTK + ".dat");
-	cout << "		          =================>>>LICH SU GIAO DICH<<<=================\n\n";
-
-cout << "hh/mm/ss    Dd/mm/yy      Convert     Wallet    Tran-Fee    Type   Account number     F-L name      Trading code\n";
-	while(!fin.eof())
-	{
-		getline(fin, a, '\n');
-		cout << a << endl;
-		Sleep(30);
-	}
-	fin.close();
-	cout << "\t\t___________________________________________________________________________\n";
 }
 
 //In hoa don:
@@ -1058,6 +1036,30 @@ void textcolor(int color)
 	hC = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hC, color);
 }
+//Them vao cuoi DS:
+void addTail(List& L, KhachHang kH)
+{
+	Node* pNew = createNode(kH);
+	if (L.pHead == NULL) //Danh sach rong
+	{
+		L.pHead = L.pTail = pNew;
+		return;
+	}
+	else
+	{
+		L.pTail->pNext = pNew;
+		L.pTail = pNew;
+	}
+}
+Node* createNode(KhachHang kH)
+{
+	Node* p = new Node;
+	if (p == NULL)
+		exit(1);
+	p->nData = kH;
+	p->pNext = NULL;
+	return p;
+}
 int nDemSoLuongKhachHang()
 {
 
@@ -1073,4 +1075,3 @@ int nDemSoLuongKhachHang()
 	fin.close();
 	return nDem;
 }
-	
